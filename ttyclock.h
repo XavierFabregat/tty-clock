@@ -85,6 +85,7 @@ typedef struct
           long delay;
           bool blink;
           long nsdelay;
+          int scale;
      } option;
 
      /* Clock geometry */
