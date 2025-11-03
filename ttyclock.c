@@ -398,7 +398,7 @@ clock_rebound(void)
 void
 set_second(void)
 {
-     int new_w = (((ttyclock.option.second = !ttyclock.option.second)) ? SECFRAMEW : NORMFRAMEW);
+     int new_w = (((ttyclock.option.second = !ttyclock.option.second)) ? SECFRAMEW : NORMFRAMEW) * ttyclock.option.scale;
      int y_adj;
 
      for(y_adj = 0; (ttyclock.geo.y - y_adj) > (COLS - new_w - 1); ++y_adj);
