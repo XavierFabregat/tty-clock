@@ -411,6 +411,44 @@ set_second(void)
 }
 
 void
+cycle_scale(void)
+{
+     int new_scale = ttyclock.option.scale + 1;
+     int new_w;
+     int new_h;
+     int new_x;
+     int new_y;
+
+     if(new_scale > 4)
+          new_scale = 1;
+
+     ttyclock.option.scale = new_scale;
+
+     new_w = ((ttyclock.option.second ? SECFRAMEW : NORMFRAMEW) * new_scale);
+     new_h = 7 * new_scale;
+
+     new_x = ttyclock.geo.x;
+     new_y = ttyclock.geo.y;
+
+     if(new_x > (LINES - new_h - DATEWINH))
+          new_x = LINES - new_h - DATEWINH;
+     if(new_x < 0)
+          new_x = 0;
+
+     if(new_y > (COLS - new_w - 1))
+          new_y = COLS - new_w - 1;
+     if(new_y < 0)
+          new_y = 0;
+
+     clock_move(new_x, new_y, new_w, new_h);
+
+     if(ttyclock.option.center)
+          set_center(true);
+
+     return;
+}
+
+void
 set_center(bool b)
 {
      if((ttyclock.option.center = b))
@@ -561,6 +599,11 @@ key_event(void)
      case 'X':
           set_box(!ttyclock.option.box);
           break;
+
+    case 'z':
+    case 'Z':
+         cycle_scale();
+         break;
 
      case '0': case '1': case '2': case '3':
      case '4': case '5': case '6': case '7':
